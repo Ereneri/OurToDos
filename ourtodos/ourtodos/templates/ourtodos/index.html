@@ -1,0 +1,10 @@
+{% extends "ourtodos/layout.html" %}
+
+{% block block %}
+    <h1>Our ToDos</h1>
+    <ul>
+        {% for todo in todos %}
+            <li>{{ todo.title }}</li>
+        {% endfor %}
+
+{% endblock %}
