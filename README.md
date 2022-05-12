@@ -9,8 +9,8 @@ A collaborative project to help people organize their to-dos.
 [ ] Create Account SQL database\
 [ ] Create Hash and Salt password for user\
 [ ] Create Django Models\
-[ ] Create Login Page\
-[ ] Create Resigter Page\
+[ ] Create login Page\
+[ ] Create register Page\
 [ ] Password Reset/Change
  
 ### Frontend
