@@ -1,27 +1,27 @@
-## OurToDos
+# OurToDos
 
 A collaborative project to help people organize their to-dos.
 
-### Todos:
+## Todos:
 
-#### Login Features
+### Login Features
 
 [ ] Create Account SQL database\
 [ ] Create Hash and Salt password for user\
 [ ] Create Django Models\
 [ ] Create Login Page\
 [ ] Create Resigter Page\
-[ ] Password Reset/Change\
+[ ] Password Reset/Change
  
-#### Frontend
+### Frontend
 
 [ ] Decide on either HTML or Javascript\
 [ ] Work on Frontend layout\
 [ ] Create To Do database and models\
-[ ] Create To do page\
+[ ] Create To do page
 
-#### Collaborative Features
+### Collaborative Features
 
 [ ] Add Invite Friends feature\
 [ ] Add Personal and Group To Do lists\
-[ ] Add feature of who completed/added a task\
+[ ] Add feature of who completed/added a task
