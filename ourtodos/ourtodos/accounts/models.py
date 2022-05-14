@@ -5,6 +5,8 @@ from django.utils.translation import gettext_lazy
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
 
 # Create your models here.
+
+## User Models
 class UserManager(BaseUserManager):
 
     def create_user(self, name, password, email, **other_fields):
@@ -47,5 +49,23 @@ class NewUser(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return self.email
+
+################################################################################
+
+## Todo List Models
+
+class Task(models.Model):
+    
+    id = models.AutoField(primary_key=True)
+    task = models.CharField(max_length=255)
+    user = models.ForeignKey(NewUser, on_delete=models.CASCADE, null=True)
+    complete = models.BooleanField(default=False)
+    completedBy = models.ForeignKey(NewUser, on_delete=models.CASCADE, related_name='completedBy')
+
+    def __str__(self):
+        return self.task
+
+    class Meta:
+        ordering = ['complete']
 
 

@@ -1,0 +1,22 @@
+{% extends "accounts/layout.html" %}
+
+{% block body %}
+<h1>My Todo List</h1>
+
+<table>
+    <tr>
+        <th>Tasks</th>
+    </tr>
+    {% for task in tasks %}
+    <tr>
+        <td>{{ task.task }}</td>
+        <td>{{ task.user }}</td>
+        <td>{{ task.compltedBy }}</td>
+    </tr>
+    {% empty %}
+        <h3>No tasks</h3>
+    {% endfor %}
+    </tr>
+</table>
+
+{% endblock %}

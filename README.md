@@ -6,10 +6,8 @@ A collaborative project to help people organize their to-dos.
 
 ### Login Features
 
-[ ] Create Account SQL database\
-[ ] Create Hash and Salt password for user\
-[ ] Create Django Models\
-[ ] Create login Page\
+[W] Create Django Models\
+[W] Create login Page\
 [ ] Create register Page\
 [ ] Password Reset/Change
  
