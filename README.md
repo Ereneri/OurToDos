@@ -6,20 +6,22 @@ A collaborative project to help people organize their to-dos.
 
 ### Login Features
 
-[W] Create Django Models\
-[W] Create login Page\
-[ ] Create register Page\
-[ ] Password Reset/Change
+☒ Create Django Models\
+☒ Create login Page\
+☐ Create register Page\
+☐ Password Reset/Change
  
 ### Frontend
 
-[ ] Decide on either HTML or Javascript\
-[ ] Work on Frontend layout\
-[ ] Create To Do database and models\
-[ ] Create To do page
+☐ Decide on either HTML or Javascript\
+☐ Work on Frontend layout\
+☒ Create To Do database and models\
+☐ Create To do page
 
 ### Collaborative Features
 
-[ ] Add Invite Friends feature\
-[ ] Add Personal and Group To Do lists\
-[ ] Add feature of who completed/added a task
+☐ Add Invite Friends feature\
+☐ Add Personal and Group To Do lists\
+☐ Add feature of who completed/added a task
+
+☑ source .venv/bin/activate

@@ -45,10 +45,10 @@ class NewUser(AbstractBaseUser, PermissionsMixin):
     objects = UserManager()
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['name', 'password']
+    REQUIRED_FIELDS = ['password', 'name']
 
     def __str__(self):
-        return self.email
+        return self.name
 
 ################################################################################
 
@@ -60,7 +60,7 @@ class Task(models.Model):
     task = models.CharField(max_length=255)
     user = models.ForeignKey(NewUser, on_delete=models.CASCADE, null=True)
     complete = models.BooleanField(default=False)
-    completedBy = models.ForeignKey(NewUser, on_delete=models.CASCADE, related_name='completedBy')
+    completedBy = models.ForeignKey(NewUser, on_delete=models.CASCADE, related_name='completedBy', null=True, blank=True)
 
     def __str__(self):
         return self.task
