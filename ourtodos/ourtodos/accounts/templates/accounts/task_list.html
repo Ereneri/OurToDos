@@ -1,28 +1,27 @@
 {% extends "accounts/layout.html" %}
 
 {% block body %}
-<div style="padding: 2em">
+<div style="padding: 2em" data-theme="dark">
     {% for message in messages %}
         <div class="alert alert-primary">
             {{ message }}
         </div>
     {% endfor %}
     <h3><strong>Tasks</strong></h3>
-
         <table>
             {% for task in tasks %}
             <tr>
-                <a href="{% url 'completeTask' task.id %}" style="text-decoration: none; color: black">
+                <a href="{% url 'completeTask' task.id %}" style="text-decoration: none;" data-theme="dark">
                     <div class="form-check">
                         {% if task.complete %}
-                        <div style="text-decoration: line-through; color: darkgray">
-                                ✅
+                        <div style="text-decoration: line-through" data-theme="light">
+                                ☒
                                 {{ task.task }}
                                 <strong>{{ task.user }}</strong>
-                                {{ task.compltedBy }}
+                                {{ task.completedBy }}
                         </div>
                         {% else %}
-                            ⚫
+                            ☐
                             {{ task.task }}
                             <strong>{{ task.user }}</strong>
                         {% endif %}
@@ -31,11 +30,14 @@
                 <hr>
             </tr>
             {% empty %}
-                <h3>No tasks</h3>
+            <h3>No tasks</h3>
             {% endfor %}
+            <tr>
+                    <input type="text" placeholder="New task"/>
+            </tr>
             </tr>
     </table>
-    
+
 </div>
 
 {% endblock %}
