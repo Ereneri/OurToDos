@@ -1,8 +1,9 @@
-from http.client import HTTPResponse
+from django.http import HttpResponse,HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView
+from django.urls import reverse
 from django import forms
 from .models import Task
 from django.contrib import messages
@@ -24,6 +25,9 @@ class taskForm(forms.ModelForm):
 
 ###############################################################################
 
+def index(request):
+    return render(request, 'index.html')
+
 def createNewTask(request, list_id):
     list = Task.objects.get(id=task_id)
     
@@ -33,8 +37,21 @@ def createNewTask(request, list_id):
         todo = Task(list = list, user= request.user, task=task)
         todo.save()
 
-        message.add_message(request, messages.INFO, 'Task Created')
+        messages.add_message(request, messages.INFO, 'Task Created')
 
         return redirect('list', list_id = list_id)
+
+def completeTask(request, task_id):
+    task = Task.objects.get(id=task_id)
+
+    if task.complete == True:
+        task.complete = False
+        task.completedBy = None
+    else:
+        task.complete = True
+        task.completedBy = request.user
+    task.save()
+
+    return HttpResponseRedirect(reverse("index"))
 
 

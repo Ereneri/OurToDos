@@ -1,32 +1,41 @@
 {% extends "accounts/layout.html" %}
 
 {% block body %}
-{% for message in messages %}
-    <div class="alert alert-primary">
-           {{ message }}
-    </div>
-{% endfor %}
-<h1>My Todo List</h1>
+<div style="padding: 2em">
+    {% for message in messages %}
+        <div class="alert alert-primary">
+            {{ message }}
+        </div>
+    {% endfor %}
     <h3><strong>Tasks</strong></h3>
 
-    <table>
-        {% for task in tasks %}
-        <tr>
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                <label class="form-check-label" for="flexCheckDefault">
-                    {{ task.task }}
-                    <strong>{{ task.user }}</strong>
-                    {% if task.complete %}
-                        {{ task.compltedBy }}
-                    {% endif %}
-                </label>
-            </div>
-        </tr>
-        {% empty %}
-            <h3>No tasks</h3>
-        {% endfor %}
-        </tr>
+        <table>
+            {% for task in tasks %}
+            <tr>
+                <a href="{% url 'completeTask' task.id %}" style="text-decoration: none; color: black">
+                    <div class="form-check">
+                        {% if task.complete %}
+                        <div style="text-decoration: line-through; color: darkgray">
+                                ✅
+                                {{ task.task }}
+                                <strong>{{ task.user }}</strong>
+                                {{ task.compltedBy }}
+                        </div>
+                        {% else %}
+                            ⚫
+                            {{ task.task }}
+                            <strong>{{ task.user }}</strong>
+                        {% endif %}
+                    </div>
+                </a>
+                <hr>
+            </tr>
+            {% empty %}
+                <h3>No tasks</h3>
+            {% endfor %}
+            </tr>
     </table>
+    
+</div>
 
 {% endblock %}
