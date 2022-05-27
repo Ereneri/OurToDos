@@ -14,16 +14,23 @@
                 <a href="{% url 'completeTask' task.id %}" style="text-decoration: none;" data-theme="dark">
                     <div class="form-check">
                         {% if task.complete %}
-                        <div style="text-decoration: line-through" data-theme="light">
+                        <div style="text-decoration: line-through; margin: 0px;
+                        padding: 0px;" data-theme="light">
                                 ☒
                                 {{ task.task }}
                                 <strong>{{ task.user }}</strong>
                                 {{ task.completedBy }}
+                                <a href="{% url 'removeTask' task.id %}" style="text-decoration: none; float: right;" data-theme="dark">
+                                    x
+                                </a>
                         </div>
                         {% else %}
                             ☐
                             {{ task.task }}
-                            <strong>{{ task.user }}</strong>
+                            <strong>({{ task.user }})</strong>
+                            <a href="{% url 'removeTask' task.id %}" style="text-decoration: none; float: right;" data-theme="dark">
+                                x
+                            </a>
                         {% endif %}
                     </div>
                 </a>
@@ -33,7 +40,7 @@
             <h3>No tasks</h3>
             {% endfor %}
             <tr>
-                    <input type="text" placeholder="New task"/>
+                <input type="text" placeholder="New task"/>
             </tr>
             </tr>
     </table>

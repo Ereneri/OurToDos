@@ -54,4 +54,10 @@ def completeTask(request, task_id):
 
     return HttpResponseRedirect(reverse("index"))
 
+def removeTask(request, task_id):
+    task = Task.objects.get(id=task_id)
+    task.delete()
+
+    return HttpResponseRedirect(reverse("index"))
+
 
