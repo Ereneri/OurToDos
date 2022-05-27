@@ -28,9 +28,8 @@
                             ☐
                             {{ task.task }}
                             <strong>({{ task.user }})</strong>
-                            <a href="{% url 'removeTask' task.id %}" style="text-decoration: none; float: right;" data-theme="dark">
-                                x
-                            </a>
+                            <a href="{% url 'removeTask' task.id %}" style="text-decoration: none; float: right;" data-theme="dark">✗</a>
+                            <a class="edit" style="float:right; padding-right: 10px;text-decoration: none;" data-theme="dark">✎</a>
                         {% endif %}
                     </div>
                 </a>
