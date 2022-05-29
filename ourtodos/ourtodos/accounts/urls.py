@@ -15,11 +15,19 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from .views import TaskList, completeTask, removeTask
+from .views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('api/', apiOverview, name='apiOverview'),
+    path('task-list/', taskList, name='task-list'),
+    path('task-detail/<str:pk>/', taskDetail, name='task-detail'),
+    path('task-create/', taskCreate, name='task-create'),
+    path('task-edit/<str:pk>?/', taskEdit, name='task-edit'),
+    path('task-delete/<str:pk>?/', taskDelete, name='task-delete'),
+
     path('', TaskList.as_view(), name='index'),
-    path('completeTask/<int:task_id>', completeTask, name='completeTask'),
+    path('completeTask/<int:task_id>', completeTask, name='completeTask/'),
     path('removeTask/<int:task_id>', removeTask, name='removeTask'),
+    path('createNewTask/', createNewTask, name='createNewTask'),
 ]

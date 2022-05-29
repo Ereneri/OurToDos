@@ -39,11 +39,32 @@
             <h3>No tasks</h3>
             {% endfor %}
             <tr>
-                <input type="text" placeholder="New task"/>
+                <div class="form-wrapper">
+                    <form action="{% url 'createNewTask' %}" method="POST">
+                        {% csrf_token %}
+                        <input id="form" type="text" placeholder="New task"/>
+                        <input id="myButton" type="submit" hidden />
+                    </form>
+                </div>
             </tr>
             </tr>
     </table>
 
 </div>
+
+<script>
+    var form = document.getElementById('form');
+    form.addEventListener('keyup', function(event) {
+        if (event.keyCode === 13) {
+            event.preventDefault();
+            document.getElementById('myButton').click();
+        }
+    });
+
+    function buttonCode()
+    {
+        alert("Button code executed.");
+    }
+</script>
 
 {% endblock %}
