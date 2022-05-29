@@ -42,7 +42,7 @@
                 <div class="form-wrapper">
                     <form action="{% url 'createNewTask' %}" method="POST">
                         {% csrf_token %}
-                        <input id="form" type="text" placeholder="New task"/>
+                        <input id="task" name="task" type="text" placeholder="New task"/>
                         <input id="myButton" type="submit" hidden />
                     </form>
                 </div>

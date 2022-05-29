@@ -25,26 +25,28 @@ class CreateTask(CreateView):
     model = Task
     field = ['task', 'user', 'complete', 'completedBy']
 
-class taskForm(forms.ModelForm):
+class taskForm(forms.Form):
     task = forms.CharField(max_length=255)
 
 ###############################################################################
 
 def index(request):
-    return render(request, 'index.html')
+    return render(request, 'accounts/index.html', {
+        'tasks': Task.objects.all()
+    })
 
-def createNewTask(request, list_id):
-    list = Task.objects.get(id=task_id)
+def createNewTask(request):
     
+    # Takes POST form data and creates new task and adds to database
     if request.method == 'POST':
         form = taskForm(request.POST)
-        task = form.data['task']
-        todo = Task(list = list, user= request.user, task=task)
+        taskInput = request.POST["task"]
+        todo = Task(user= request.user, task=taskInput)
         todo.save()
 
-        messages.add_message(request, messages.INFO, 'Task Created')
+        # messages.add_message(request, messages.INFO, 'Task Created')
 
-        return redirect('list', list_id = list_id)
+        return redirect('index')
 
 def completeTask(request, task_id):
     task = Task.objects.get(id=task_id)
