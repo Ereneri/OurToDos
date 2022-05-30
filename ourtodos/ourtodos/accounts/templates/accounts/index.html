@@ -29,7 +29,8 @@
                             {{ task.task }}
                             <strong>({{ task.user }})</strong>
                             <a href="{% url 'removeTask' task.id %}" style="text-decoration: none; float: right;" data-theme="dark">✗</a>
-                            <a class="edit" style="float:right; padding-right: 10px;text-decoration: none;" data-theme="dark">✎</a>
+
+                            <a class="edit" id="{{ task.id }}" style="float:right; padding-right: 10px;text-decoration: none;" data-theme="dark">✎</a>
                         {% endif %}
                     </div>
                 </a>
@@ -42,29 +43,19 @@
                 <div class="form-wrapper">
                     <form action="{% url 'createNewTask' %}" method="POST">
                         {% csrf_token %}
-                        <input id="task" name="task" type="text" placeholder="New task"/>
+                        <input autocomplete="off" style="padding-top: 0px;" id="task" name="task" type="text" placeholder="New task"/>
                         <input id="myButton" type="submit" hidden />
                     </form>
                 </div>
             </tr>
-            </tr>
     </table>
-
 </div>
 
 <script>
-    var form = document.getElementById('form');
-    form.addEventListener('keyup', function(event) {
-        if (event.keyCode === 13) {
-            event.preventDefault();
-            document.getElementById('myButton').click();
-        }
-    });
-
-    function buttonCode()
-    {
-        alert("Button code executed.");
-    }
+    const edits = document.querySelector('.edit');
+    document.addEventListener('click', e => {
+        console.log(e.target.id);
+    })
 </script>
 
 {% endblock %}
