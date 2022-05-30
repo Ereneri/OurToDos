@@ -8,11 +8,21 @@
         </div>
     {% endfor %}
     <h3><strong>Tasks</strong></h3>
-        <table>
+    <table>
+            <tr>
+                <div class="form-wrapper">
+                    <form action="{% url 'createNewTask' %}" method="POST">
+                        {% csrf_token %}
+                        <input autocomplete="off" style="font-size: 24px; height: auto; padding: 0;" name="task" type="text" placeholder="New task"/>
+                        <input style="padding: 0px;" type="submit" hidden />
+                    </form>
+                    <hr>
+                </div>
+            </tr>
             {% for task in tasks %}
             <tr>
                 <a href="{% url 'completeTask' task.id %}" style="text-decoration: none;" data-theme="dark">
-                    <div class="form-check">
+                    <div class="task-wrapper" id="{{ task.id }}.taskDiv" style="padding-top: .5em; padding-bottom: .5em;">
                         {% if task.complete %}
                         <div style="text-decoration: line-through; margin: 0px;
                         padding: 0px;" data-theme="light">
@@ -41,16 +51,6 @@
             {% empty %}
             <h3>No tasks</h3>
             {% endfor %}
-            <tr>
-                <div class="form-wrapper">
-                    <form action="{% url 'createNewTask' %}" method="POST">
-                        {% csrf_token %}
-                        <input autocomplete="off" style="padding-top: 0px;" id="task" name="task" type="text" placeholder="New task"/>
-                        <input type="submit" hidden />
-                    </form>
-                    <hr>
-                </div>
-            </tr>
     </table>
 </div>
 
@@ -81,7 +81,15 @@
                 fetch(url)
                     .then(response => response.json())
                     .then(data => {
-                        console.log(data)
+                        var form = `
+                        <div class="task-wrapper" id="${data.id}.task.Div" style="padding-top: .75em; padding-bottom: 0em;">
+                            <form method="POST">
+                                {% csrf_token %}
+                                <input autocomplete="off" style="height: auto; padding: 0; margin:0" id="editField" name="task" type="text" value="${data.task}"/>
+                                <input style="padding: 0px;" type="submit"/>
+                            </form>
+                        </div>`
+                        document.getElementById(`${data.id}.taskDiv`).outerHTML = form;
                     });
             }
         }
