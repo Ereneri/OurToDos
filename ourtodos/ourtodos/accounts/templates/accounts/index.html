@@ -44,17 +44,23 @@
                     <form action="{% url 'createNewTask' %}" method="POST">
                         {% csrf_token %}
                         <input autocomplete="off" style="padding-top: 0px;" id="task" name="task" type="text" placeholder="New task"/>
-                        <input id="myButton" type="submit" hidden />
+                        <input type="submit" hidden />
                     </form>
+                    <hr>
                 </div>
             </tr>
     </table>
 </div>
 
 <script>
-    const edits = document.querySelector('.edit');
+    const edits = document.querySelectorAll('.edit');
     document.addEventListener('click', e => {
-        console.log(e.target.id);
+        for (let i = 0; i < edits.length; i++) {
+            if (e.target.id === edits[i].id) {
+                const editID = (e.target.id);
+                console.log(editID);
+            }
+        }
     })
 </script>
 
