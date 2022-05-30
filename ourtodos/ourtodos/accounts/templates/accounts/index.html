@@ -25,12 +25,14 @@
                                 </a>
                         </div>
                         {% else %}
-                            ☐
-                            {{ task.task }}
-                            <strong>({{ task.user }})</strong>
-                            <a href="{% url 'removeTask' task.id %}" style="text-decoration: none; float: right;" data-theme="dark">✗</a>
+                            <div id="{{ task.id }}.title">
+                                ☐
+                                {{ task.task }}
+                                <strong>({{ task.user }})</strong>
+                                <a href="{% url 'removeTask' task.id %}" style="text-decoration: none; float: right;" data-theme="dark">✗</a>
 
-                            <a class="edit" id="{{ task.id }}" style="float:right; padding-right: 10px;text-decoration: none;" data-theme="dark">✎</a>
+                                <a class="edit" id="{{ task.id }}" style="float:right; padding-right: 10px;text-decoration: none;" data-theme="dark">✎</a>
+                            </div>
                         {% endif %}
                     </div>
                 </a>
@@ -53,12 +55,34 @@
 </div>
 
 <script>
+    function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+    }
+    const csrftoken = getCookie('csrftoken');
+
     const edits = document.querySelectorAll('.edit');
     document.addEventListener('click', e => {
         for (let i = 0; i < edits.length; i++) {
             if (e.target.id === edits[i].id) {
                 const editID = (e.target.id);
-                console.log(editID);
+                var url = `http://127.0.0.1:8000/task-detail/${editID}/`
+                fetch(url)
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log(data)
+                    });
             }
         }
     })
