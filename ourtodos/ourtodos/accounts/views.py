@@ -67,6 +67,17 @@ def removeTask(request, task_id):
 
     return HttpResponseRedirect(reverse("index"))
 
+def editTask(request, task_id):
+    task = Task.objects.get(id=task_id)
+
+    if request.method == 'POST':
+        form = taskForm(request.POST)
+        taskInput = request.POST["newTask"]
+        task.task = taskInput
+        task.save()
+
+        return redirect('index')
+
 ###############################################################################
 
 @api_view(['GET'])

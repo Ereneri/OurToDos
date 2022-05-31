@@ -83,12 +83,13 @@
                     .then(data => {
                         var form = `
                         <div class="task-wrapper" id="${data.id}.task.Div" style="padding-top: .75em; padding-bottom: 0em;">
-                            <form method="POST">
+                            <form action="{% url 'editTask' ${data.id} %}" method="POST">
                                 {% csrf_token %}
-                                <input autocomplete="off" style="height: auto; padding: 0; margin:0" id="editField" name="task" type="text" value="${data.task}"/>
-                                <input style="padding: 0px;" type="submit"/>
+                                <input autocomplete="off" style="height: auto; padding: 0; margin:0" id="editField" name="newTask" type="text" value="${data.task}"/>
+                                <input style="padding: 0px;" type="submit hidden"/>
                             </form>
-                        </div>`
+                        </div>
+                        `
                         document.getElementById(`${data.id}.taskDiv`).outerHTML = form;
                     });
             }
