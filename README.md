@@ -13,7 +13,7 @@ A collaborative project to help people organize their to-dos.
  
 ### Frontend
 
-☒ Decide on either *HTML* or Javascript\ 
+☒ Decide on either *HTML* or Javascript\
 ☒ Work on Frontend layout\
 ☒ Create To Do database and models\
 ☒ Create To do page
