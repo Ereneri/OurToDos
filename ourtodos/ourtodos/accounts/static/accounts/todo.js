@@ -3,23 +3,24 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // basic buttons for complete and uncomplete
     document.addEventListener('click', event => {
-        if (event.target.className === 'complete') {
-            const todoId = event.target.parentNode.id;
-            console.log("parentnode " + todoId);
-            const todo = document.getElementById(todoId);
-            console.log("getelementbyID " + todo);
+        console.log("clicked");
+        if (event.target.className === 'task-div') {
+            const todoId = event.target.id;
+            updateComplete(todoId);
         }
     });
 
     function updateComplete(todoId) {
-        const todo = document.getElementById(todoId);
-        fetch('/task-edit/' + todoId, {
-            method: 'PUT',
-            body: JSON.stringify({ complete : !todo.complete }),
-          })
-          console.log("edit made");
-    }
-
+        fetch('/task-detail/' + todoId)
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+        // fetch('/task-edit/' + todoId, {
+        //     method: 'PUT',
+        //     body: JSON.stringify({ complete :  }),
+        //   })
+        //   console.log("edit made");
+    });}
 
     function getCookie(name) {
     let cookieValue = null;

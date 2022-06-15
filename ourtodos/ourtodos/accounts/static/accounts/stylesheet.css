@@ -5,3 +5,8 @@ input:focus {
     border-width: 0; 
     box-shadow: none;
 }
+
+a {
+    color: whitesmoke;
+    text-decoration: none; /* no underline */
+  }
