@@ -35,49 +35,6 @@ def index(request):
         'tasks': Task.objects.all()
     })
 
-def createNewTask(request):
-    
-    # Takes POST form data and creates new task and adds to database
-    if request.method == 'POST':
-        form = taskForm(request.POST)
-        taskInput = request.POST["task"]
-        todo = Task(user= request.user, task=taskInput)
-        todo.save()
-
-        # messages.add_message(request, messages.INFO, 'Task Created')
-
-        return redirect('index')
-
-def completeTask(request, task_id):
-    task = Task.objects.get(id=task_id)
-
-    if task.complete == True:
-        task.complete = False
-        task.completedBy = None
-    else:
-        task.complete = True
-        task.completedBy = request.user
-    task.save()
-
-    return HttpResponseRedirect(reverse("index"))
-
-def removeTask(request, task_id):
-    task = Task.objects.get(id=task_id)
-    task.delete()
-
-    return HttpResponseRedirect(reverse("index"))
-
-def editTask(request, task_id):
-    task = Task.objects.get(id=task_id)
-
-    if request.method == 'POST':
-        form = taskForm(request.POST)
-        taskInput = request.POST["newTask"]
-        task.task = taskInput
-        task.save()
-
-        return redirect('index')
-
 ###############################################################################
 
 @api_view(['GET'])

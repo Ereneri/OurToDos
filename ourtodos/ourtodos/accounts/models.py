@@ -50,6 +50,9 @@ class NewUser(AbstractBaseUser, PermissionsMixin):
     def __str__(self):
         return self.name
 
+class User (AbstractBaseUser):
+    pass
+
 ################################################################################
 
 ## Todo List Models
@@ -67,5 +70,6 @@ class Task(models.Model):
 
     class Meta:
         ordering = ['complete']
+
 
 
