@@ -21,16 +21,16 @@
             <tr>
                 <div class="task-wrapper" id="{{ task.id }}.taskDiv" style="padding-top: .5em; padding-bottom: .5em;">
                         {% if task.complete %}
-                        <div style="text-decoration: line-through; margin: 0px;
-                        padding: 0px;" data-theme="light">
-                                ☒
-                                {{ task.task }}
-                                <strong>{{ task.user }}</strong>
-                                {{ task.completedBy }}
-                                ✗
-                        </div>
+                            <div id="{{ task.id }}.title" class="complete" style="text-decoration: line-through; margin: 0px;
+                            padding: 0px;" data-theme="light">
+                                    ☒
+                                    {{ task.task }}
+                                    <strong>{{ task.user }}</strong>
+                                    {{ task.completedBy }}
+                                    ✗
+                            </div>
                         {% else %}
-                            <div id="{{ task.id }}.title">
+                            <div id="{{ task.id }}.title" class="not-complete">
                                 ☐
                                 {{ task.task }}
                                 <strong>({{ task.user }})</strong>
