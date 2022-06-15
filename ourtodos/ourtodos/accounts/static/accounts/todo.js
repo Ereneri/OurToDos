@@ -20,7 +20,8 @@ document.addEventListener('DOMContentLoaded', function() {
         //     body: JSON.stringify({ complete :  }),
         //   })
         //   console.log("edit made");
-    });}
+    });
+    }
 
     function getCookie(name) {
     let cookieValue = null;

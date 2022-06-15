@@ -11,7 +11,7 @@ from django.http import JsonResponse
 
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
-from .serializers import TaskSerializers
+from .serializers import TaskSerializers, UserSerializers
 
 # Create your views here.
 
@@ -60,6 +60,12 @@ def taskList(request):
 def taskDetail(request, pk):
     tasks = Task.objects.get(id=pk)
     serializer = TaskSerializers(tasks, many=False)
+    return Response(serializer.data)
+
+@api_view(['GET'])
+def getUser(request):
+    user = request.user
+    serializer = UserSerializers(user)
     return Response(serializer.data)
 
 @api_view(['POST'])
