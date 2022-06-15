@@ -7,7 +7,7 @@ A collaborative project to help people organize their to-dos.
 ### Login Features
 
 ☒ Create Django Models\
-☒ Create login Page\
+☐ Create login Page\
 ☐ Create register Page\
 ☐ Password Reset/Change
  
