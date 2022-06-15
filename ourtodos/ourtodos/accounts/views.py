@@ -8,6 +8,7 @@ from django import forms
 from .models import Task
 from django.contrib import messages
 from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
 
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
@@ -68,6 +69,7 @@ def getUser(request):
     serializer = UserSerializers(user)
     return Response(serializer.data)
 
+@csrf_exempt
 @api_view(['POST'])
 def taskCreate(request):
     serializer = TaskSerializers(data=request.data)
@@ -76,6 +78,7 @@ def taskCreate(request):
 
     return Response(serializer.data)
 
+@csrf_exempt
 @api_view(['POST'])
 def taskEdit(request, pk):
     task = Task.objects.get(id=pk)

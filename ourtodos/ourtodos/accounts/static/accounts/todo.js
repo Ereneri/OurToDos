@@ -1,10 +1,20 @@
 document.addEventListener('DOMContentLoaded', function() {
+    var UserID = getID();
+
+    function getID() {
+        fetch('/getUser/')
+        .then(response => response.json())
+        .then(data => {
+            UserID = data.id;
+        });
+    }
     console.log("dom loaded");
 
     // basic buttons for complete and uncomplete
     document.addEventListener('click', event => {
         console.log("clicked");
         if (event.target.className === 'task-div') {
+            console.log("clicked task div");
             const todoId = event.target.id;
             updateComplete(todoId);
         }
@@ -12,15 +22,28 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function updateComplete(todoId) {
         fetch('/task-detail/' + todoId)
-        .then(response => response.json())
+        .then(res => {
+            if (res.ok) {console.log("Get Success")}
+            else {console.log("Get Failed")}
+            return res
+        })
         .then(data => {
             console.log(data);
-        // fetch('/task-edit/' + todoId, {
-        //     method: 'PUT',
-        //     body: JSON.stringify({ complete :  }),
-        //   })
-        //   console.log("edit made");
-    });
+            fetch(`/task-edit/${todoId}/`, {
+                method: 'PUT',
+                body: JSON.stringify(
+                    { 
+                        complete: !data['complete']
+                    }
+                )
+            })
+            .then(res => {
+                if (res.ok) {console.log("Update Success")}
+                else {console.log("Update Failed")}
+                return res
+            })
+            console.log("edit made");
+        })
     }
 
     function getCookie(name) {
