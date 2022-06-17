@@ -7,13 +7,13 @@ A collaborative project to help people organize their to-dos.
 ### Login Features
 
 ☒ Create Django Models\
-☒ Create login Page\
+☐ Create login Page\
 ☐ Create register Page\
 ☐ Password Reset/Change
  
 ### Frontend
 
-☒ Decide on either *HTML* or Javascript\ 
+☒ Build Javascript functions (WIP STILL)\
 ☒ Work on Frontend layout\
 ☒ Create To Do database and models\
 ☒ Create To do page
