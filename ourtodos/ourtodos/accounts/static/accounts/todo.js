@@ -12,11 +12,21 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // basic buttons for complete and uncomplete
     document.addEventListener('click', event => {
-        console.log("clicked");
-        if (event.target.className === 'task-div') {
-            console.log("clicked task div");
-            const todoId = event.target.id;
-            updateComplete(todoId);
+        // console.log("clicked");
+        // console.log(event.target.className);
+        // should make a call to the database and flip the boolean for the complete task 
+        if (event.target.className === 'text-div') {
+            console.log("toggle for task complete");
+            // const todoId = event.target.id;
+            // updateComplete(todoId);
+        }
+        // should find the task id and remove and it from the database
+        if (event.target.className === 'task-delete') {
+            console.log("button for task delete");
+        }
+        // should edit div to allow for input and make a request to edit the database info
+        if (event.target.className === 'task-edit') {
+            console.log("button for task edit");
         }
     });
 

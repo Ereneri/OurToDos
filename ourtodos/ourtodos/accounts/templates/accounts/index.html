@@ -19,28 +19,37 @@
             </tr>
             {% for task in tasks %}
             <tr>
-                <div class="task-wrapper" id="{{ task.id }}.taskDiv" style="padding-top: .5em; padding-bottom: .5em;">
+                <div class="task-wrapper" id="{{ task.id }}.taskDiv" style="padding-top: .5em; padding-bottom: 2em;">
                         {% if task.complete %}
                             <a href="">
-                                <div id="{{ task.id }}" class="task-div" style="text-decoration: line-through; margin: 0px;
-                                padding: 0px;" data-theme="light">
+                                <div id="{{ task.id }}" class="todo-wrapper" style="text-decoration: line-through; margin: 0px;
+                                padding: 0px; width: 80%;" data-theme="light">
                                         ☒
                                         {{ task.task }}
                                         <strong>{{ task.user }}</strong>
                                         {{ task.completedBy }}
-                                        ✗
+                                        <div style="float: right; display: flex;">
+                                            <a class="task-delete" id="{{task.id}}.delete" href="">
+                                                ✗
+                                            </a>
+                                        </div>
                                 </div>
 
                             </a>
                         {% else %}
-                            <a href="">
-                                <div id="{{ task.id }}" class="task-div">
-                                    ☐
-                                    {{ task.task }}
-                                    <strong>({{ task.user }})</strong>
-                                    ✗ ✎
+                        <div id="{{ task.id }}" class="todo-wrapper">
+                                <a id="{{task.id}}.complete" href="">
+                                    <div class="text-div" style="width: 80%; float: left; display: flex;">
+                                        ☐
+                                        {{ task.task }}
+                                        <strong>({{ task.user }})</strong>
+                                    </div>
+                                </a>
+                                    <div style="float: right; display: flex;">
+                                        <a class="task-delete" id="{{ task.id }}.delete" href="" style="padding-right: .5em">✗ </a>
+                                        <a class="task-edit" id="{{ task.id }}.edit" href="">✎ </a>
+                                    </div>
                                 </div>
-                            </a>
                         {% endif %}
                     </div>
                 </a>
