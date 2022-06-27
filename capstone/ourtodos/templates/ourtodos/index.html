@@ -4,20 +4,17 @@
 
 {% if user.is_authenticated %}
 
-    {% if lists %}
-        <div style="display: block" class="list-list">
+    <div style="display: block" class="list-list" id="list-list">
+        <hr>
+        {% for list in lists %}
+                <div onclick="load('{{ list.id }}', '{{ list.title }}')">
+                    <span style="font-size: 2rem;">{{ list.title }}</span>
+                    <div class="widget-subheading" style="font-size: .75rem; padding-bottom: 1rem"><i>Created by: {{ list.owner}}</i></div>
+                </div>
             <hr>
-            {% for list in lists %}
-                    <div onclick="load('{{ list.id }}')">
-                        <span style="font-size: 2rem;">{{ list.title }}</span>
-                        <div class="widget-subheading" style="font-size: .75rem; padding-bottom: 1rem"><i>Created by: {{ list.owner}}</i></div>
-                    </div>
-                <hr>
-            {% endfor %}
-        </div>
-    {% else %}
-    <div class="list-wrapper"></div>
-    {% endif %}
+        {% endfor %}
+    </div>
+    <div style="display: none" id="list-wrapper"></div>
 
 {% else %}
 <h1>Please Login to Continue</h1>

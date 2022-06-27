@@ -7,6 +7,7 @@ from django.db import IntegrityError
 from django.http import JsonResponse
 import json
 from django.core import serializers
+from django.views.decorators.csrf import csrf_exempt
 
 from .models import *
 
@@ -121,13 +122,19 @@ def list(request, listid):
             "error": "GET or PUT request required."
         }, status=400)
 
+@csrf_exempt
 @login_required
 def addtask(request):
-    data = json.load(request)['post_data'] #Get data from POST request
-    user = request.user
+    if request.method == "POST":
+        data = json.loads(request.body.decode('utf-8'))
+        user = request.user
+        parentlistID = data.get("parentList")
+        plist = List.objects.get(id=parentlistID)
 
-    Task.objects.create(parentList=data.parentList, taskName=data.taskName, createdBy=user)
-    return JsonResponse({"Success"}, status=204)
+        Task.objects.create(parentList=list, taskName=data.get("taskName", ""), createdBy=user)
+        return JsonResponse({"Success"}, status=204)
+    else:
+        return JsonResponse({"error": "POST request required."}, status=400)
 
 
 
