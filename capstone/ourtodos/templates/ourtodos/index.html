@@ -1,0 +1,32 @@
+{% extends "ourtodos/layout.html" %}
+
+{% block body %}
+
+{% if user.is_authenticated %}
+
+    {% if lists %}
+        <div style="display: block" class="list-list">
+            <hr>
+            {% for list in lists %}
+                    <div onclick="load('{{ list.id }}')">
+                        <span style="font-size: 2rem;">{{ list.title }}</span>
+                        <div class="widget-subheading" style="font-size: .75rem; padding-bottom: 1rem"><i>Created by: {{ list.owner}}</i></div>
+                    </div>
+                <hr>
+            {% endfor %}
+        </div>
+    {% else %}
+    <div class="list-wrapper"></div>
+    {% endif %}
+
+{% else %}
+<h1>Please Login to Continue</h1>
+<div class="account-wrapper">
+    <a href="{% url 'login' %}">
+        <input class="btn btn-primary btn-lg btn-block" value="Login">
+    </a>
+</div>
+{% endif %}
+
+
+{% endblock %}

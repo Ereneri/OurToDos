@@ -1,0 +1,23 @@
+{% extends "ourtodos/layout.html" %}
+
+{% block body %}
+
+{% if message %}
+    <div class="alert alert-danger" role="alert">{{ message }}</div>
+{% endif %}
+
+<h1>Create List</h1>
+
+
+    <div class="account-wrapper">
+        <form action="{% url 'createlist' %}" method="POST">
+            {% csrf_token %}
+            <div class="form-group">
+                <input autofocus class="form-control" type="text" name="listname" placeholder="List Name">
+            </div>
+            <input class="btn btn-primary btn-lg btn-block" type="submit" value="Create">
+        </form>
+    </div>
+
+
+{% endblock %}
