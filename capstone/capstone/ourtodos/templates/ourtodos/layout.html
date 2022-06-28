@@ -20,10 +20,10 @@
               <ul class="navbar-nav">
                 {% if user.is_authenticated %}
                     <li class="nav-item active">
-                    <a class="nav-link" href="{% url 'index' %}"">Home</a>
+                    <a class="nav-link" href="{% url 'index' %}">Home</a>
                     </li>
                     <li class="nav-item">
-                    <a class="nav-link" href="#">All Lists</a>
+                    <a class="nav-link" href="{% url 'alllist' %}">All Lists</a>
                     </li>
                     <li class="nav-item">
                     <a class="nav-link" href="{% url 'createlist' %}">Create List</a>

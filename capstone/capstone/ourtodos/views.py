@@ -18,10 +18,11 @@ def index(request):
     if request.user.is_authenticated:
         user = request.user
         if Pin.objects.filter(user=user).exists():
-            pinnedlist = Pin.objects.get(user=user)
-            list = Task.objects.filter(parentList=pinnedlist)
+            pinnedlist = Pin.objects.get(user=user).id
+            list = List.objects.get(id=pinnedlist)
             return render(request, "ourtodos/index.html", {
-                "list": list,
+                "list": pinnedlist,
+                "title": list
             })
         else:
             lists = List.objects.filter(subscribed=user)
@@ -32,6 +33,22 @@ def index(request):
     # Everyone else is prompted to sign in
     else:
         return HttpResponseRedirect(reverse("login"))
+
+# sends a list of all the list
+def all(request):
+
+    # Authenticated users view their inbox
+    if request.user.is_authenticated:
+        user = request.user
+        lists = List.objects.filter(subscribed=user)
+        return render(request, "ourtodos/alllist.html", {
+            "lists": lists
+        })
+
+    # Everyone else is prompted to sign in
+    else:
+        return HttpResponseRedirect(reverse("login"))
+
 
 def login_view(request):
     if request.method == "POST":
@@ -131,10 +148,58 @@ def addtask(request):
         parentlistID = data.get("parentList")
         plist = List.objects.get(id=parentlistID)
 
-        Task.objects.create(parentList=list, taskName=data.get("taskName", ""), createdBy=user)
-        return JsonResponse({"Success"}, status=204)
+        Task.objects.create(parentList=plist, taskName=data.get("taskName", ""), createdBy=user, completedBy=user)
+
+        return JsonResponse({"Success": "task added"}, status=204, safe=False)
     else:
         return JsonResponse({"error": "POST request required."}, status=400)
+
+@csrf_exempt
+@login_required
+def complete(request, taskid):
+    if request.method == "PUT":
+        # get task from DB
+        task = Task.objects.get(id=taskid)
+        data = json.loads(request.body)
+
+
+        # take string into boolean
+        completeBOOL = ""
+        if (data.get("iscomplete", "") == "false"):
+            completeBOOL = False
+        else:
+            completeBOOL = True
+
+        # load and update task with new info
+        task.iscomplete = completeBOOL
+        task.completedBy = request.user
+        task.save()
+
+        return JsonResponse({"Success": "task updated"}, status=204, safe=False)
+    else:
+        return JsonResponse({"error": "PUT request required."}, status=400)
+
+@csrf_exempt
+@login_required
+def pinlist(request, listid):
+    if request.method == 'POST':
+        if Pin.objects.filter(user=request.user).exists():
+            Pin.objects.filter(user=request.user).delete()
+            listtopin = List.objects.get(id=listid)
+            Pin.objects.create(user=request.user, pinnedlist=listtopin)
+        else:
+            Pin.objects.create(user=request.user, pinnedlist=list)
+        return JsonResponse({"Success": "pin updated"}, status=204, safe=False)
+
+    if request.method == 'GET':
+        if Pin.objects.filter(user=request.user).exists():
+            listtopin = List.objects.get(id=listid)
+            return JsonResponse(listtopin.serialize(), safe=False)
+        else:
+            return JsonResponse({"error": "No Pinned list"}, safe=False)
+    else:
+        return JsonResponse({"error": "POST or GET request required."}, status=400)
+
 
 
 

@@ -5,6 +5,8 @@ from .models import *
 admin.site.register(User)
 admin.site.register(List)
 admin.site.register(Task)
+admin.site.register(Pin)
+
 
 
 
