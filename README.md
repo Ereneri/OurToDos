@@ -7,8 +7,8 @@ A collaborative project to help people organize their to-dos.
 ### Login Features
 
 ☒ Create Django Models\
-☐ Create login Page\
-☐ Create register Page\
+☒ Create login Page\
+☒ Create register Page\
 ☐ Password Reset/Change
  
 ### Frontend
@@ -22,7 +22,7 @@ A collaborative project to help people organize their to-dos.
 
 ☐ Add Invite Friends feature\
 ☐ Add Personal and Group To Do lists\
-☐ Add feature of who completed/added a task
+☒ Add feature of who completed/added a task
 
 ### Install Directions
 
