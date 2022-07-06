@@ -6,6 +6,7 @@ admin.site.register(User)
 admin.site.register(List)
 admin.site.register(Task)
 admin.site.register(Pin)
+admin.site.register(Subscribed)
 
 
 

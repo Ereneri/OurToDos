@@ -9,7 +9,6 @@ class User(AbstractUser):
 class List(models.Model):
     """List is created by a user to invite others"""
     title = models.CharField(max_length=120, default="Untitled List")
-    subscribed = models.ForeignKey(User, on_delete=models.CASCADE, related_name="subscribed")
     owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name="owner")
 
     # serialize for API
@@ -17,7 +16,6 @@ class List(models.Model):
         return {
             "id" : self.id,
             "title" : self.title,
-            "subscribed" : self.subscribed.id,
             "owner" : self.owner.username
         }
 
@@ -57,3 +55,8 @@ class Pin(models.Model):
         return {
             "list" : self.pinnedlist.id
         }
+
+# subscribe a user to a list
+class Subscribed(models.Model):
+    masterlist = models.ForeignKey(List, on_delete=models.CASCADE, related_name="master")
+    subscribed = models.ForeignKey(User, on_delete=models.CASCADE, related_name="subscribed")

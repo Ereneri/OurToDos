@@ -1,0 +1,48 @@
+{% extends "ourtodos/layout.html" %}
+
+{% block body %}
+
+{% if user.is_authenticated %}
+    {{ request.user.username|json_script:"requestuser" }}
+
+    <div style="display: block" class="list-list" id="list-list">
+        <h1 style="text-align: center; margin-top: 1rem;">All Lists</h1>
+        <hr>
+        {% for list in lists %}
+            <div class="widget-content p-0" id="list-{{ list.id }}">
+                <div class="widget-content-wrapper" >
+                    <div class="widget-content-left mr-2">
+                        <div class="custom-control" style="padding-left:0">
+                        <span style="font-size: 1.5rem" id="star-{{ list.id }}" onclick="pinTask('{{ list.id }}')" class="pinnedTask">☆</span>
+                    </div>
+                </div>
+                    <div class="widget-content-left" onclick="load('{{ list.id }}')">
+                        <div id="taskitem-{{ list.id }}" class="widget-heading" style="font-size: 2rem">{{ list.title }}</div>
+                        <div class="widget-subheading"><i>Created by {{ list.owner}}</i></div>
+                    </div>
+                    {% if user == list.owner %}
+                    <div class="widget-content-right">
+                        <div>
+                            <div onclick="delList('{{ list.id }}', '{{ list.title }}')" id="delete" style="float:right">✗</div>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        <hr id="{{ list.id }}-bothr">
+        {% endfor %}
+    </div>
+    <div style="display: none" id="list-wrapper"></div>
+
+{% else %}
+
+<h1>Please Login to Continue</h1>
+<div class="account-wrapper">
+    <a href="{% url 'login' %}">
+        <input class="btn btn-primary btn-lg btn-block" value="Login">
+    </a>
+</div>
+{% endif %}
+
+
+{% endblock %}

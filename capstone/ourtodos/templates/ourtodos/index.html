@@ -3,18 +3,23 @@
 {% block body %}
 
 {% if user.is_authenticated %}
+    {{ request.user.username|json_script:"requestuser" }}
+
+{% if list %}
+    <body onload="load('{{ list }}')"></body>
+{% endif %}
     <div style="display: block" class="list-list" id="list-list">
         <h1 style="text-align: center; margin-top: 1rem;">All Lists</h1>
         <hr>
         {% for list in lists %}
-            <div class="widget-content p-0">
+            <div class="widget-content p-0" id="list-{{ list.id }}">
                 <div class="widget-content-wrapper" >
                     <div class="widget-content-left mr-2">
                         <div class="custom-control" style="padding-left:0">
-                        <span style="font-size: 1.5rem" id="star-{{ list.id }}" class="pinnedTask">☆</span>
+                        <span style="font-size: 1.5rem" id="star-{{ list.id }}" class="pinnedTask" onclick="pinTask('{{ list.id }}')">☆</span>
                     </div>
                 </div>
-                    <div class="widget-content-left" onclick="load('{{ list.id }}', '{{ list.title }}');redirect({{ list.id }})">
+                    <div class="widget-content-left" onclick="load('{{ list.id }}', '{{ list.title }}')">
                         <div id="taskitem" class="widget-heading" style="font-size: 2rem">{{ list.title }}</div>
                         <div class="widget-subheading"><i>{{ list.owner}}</i></div>
                     </div>
@@ -23,10 +28,11 @@
         <hr>
         {% endfor %}
     </div>
+
+
     <div style="display: none" id="list-wrapper"></div>
 
 {% else %}
-
 <h1>Please Login to Continue</h1>
 <div class="account-wrapper">
     <a href="{% url 'login' %}">
