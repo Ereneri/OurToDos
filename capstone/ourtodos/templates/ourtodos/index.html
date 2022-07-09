@@ -12,21 +12,32 @@
         <h1 style="text-align: center; margin-top: 1rem;">All Lists</h1>
         <hr>
         {% for list in lists %}
-            <div class="widget-content p-0" id="list-{{ list.id }}">
-                <div class="widget-content-wrapper" >
-                    <div class="widget-content-left mr-2">
-                        <div class="custom-control" style="padding-left:0">
-                        <span style="font-size: 1.5rem" id="star-{{ list.id }}" class="pinnedTask" onclick="pinTask('{{ list.id }}')">☆</span>
+        <div class="widget-content p-0" id="list-{{ list.id }}">
+            <div class="widget-content-wrapper" >
+                <div class="widget-content-left mr-2">
+                    <div class="custom-control" style="padding-left:0">
+                        {% load static %}
+                        <span style="font-size: 1.5rem" id="star-{{ list.id }}" onclick="pinTask('{{ list.id }}')" class="pinnedTask">
+                            <img src="{% static 'emptyStar.png' %}" alt="star" class="star"/>
+                        </span>
                     </div>
                 </div>
-                    <div class="widget-content-left" onclick="load('{{ list.id }}', '{{ list.title }}')">
-                        <div id="taskitem" class="widget-heading" style="font-size: 2rem">{{ list.title }}</div>
-                        <div class="widget-subheading"><i>{{ list.owner}}</i></div>
+                <div class="widget-content-left" onclick="load('{{ list.id }}')">
+                    <div id="taskitem-{{ list.id }}" class="widget-heading">{{ list.title }}</div>
+                    <div class="widget-subheading"><i>Created by {{ list.owner}}</i></div>
+                </div>
+                {% if user == list.owner %}
+                <div class="widget-content-right">
+                    <div>
+                        <div onclick="delList('{{ list.id }}')" id="delete" style="float:right">X</div>
                     </div>
                 </div>
+                {% endif %}
             </div>
-        <hr>
-        {% endfor %}
+        </div>
+    <hr id="{{ list.id }}-bothr">
+    {% endfor %}
+
     </div>
 
 

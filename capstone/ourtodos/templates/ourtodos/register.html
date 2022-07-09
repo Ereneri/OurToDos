@@ -11,19 +11,14 @@
     <div class="account-wrapper">
         <form action="{% url 'register' %}" method="post">
             {% csrf_token %}
-            <div class="form-group">
-                <input class="form-control" autofocus type="text" name="username" placeholder="Username">
-            </div>
-            <div class="form-group">
-                <input class="form-control" type="email" name="email" placeholder="Email Address">
-            </div>
-            <div class="form-group">
-                <input class="form-control" type="password" name="password" placeholder="Password">
-            </div>
-            <div class="form-group">
-                <input class="form-control" type="password" name="confirmation" placeholder="Confirm Password">
-            </div>
-            <input class="btn btn-primary btn-lg btn-block" type="submit" value="Register">
+            <div class="form-group container-fluid">
+                <input style="border: 0; outline: 0; background: transparent;border-bottom: 1px solid darkgrey; width: 100%;" class="form-control" autofocus type="text" name="username" placeholder="Username">
+                <input style="border: 0; outline: 0; background: transparent;border-bottom: 1px solid darkgrey; width: 100%; margin-top: 1rem" class="form-control" type="email" name="email" placeholder="Email Address">
+                <input style="border: 0; outline: 0; background: transparent;border-bottom: 1px solid darkgrey; width: 100%; margin-top: 1rem" class="form-control" type="password" name="password" placeholder="Password">
+                <input style="border: 0; outline: 0; background: transparent;border-bottom: 1px solid darkgrey; width: 100%; margin-top: 1rem" class="form-control" type="password" name="confirmation" placeholder="Confirm Password">
+                <div class="d-grid gap-2" style="padding-top: 1rem">
+                    <input class="btn btn-primary" type="submit" value="Register">
+                </div>
         </form>
 
         <div style="margin-top: 2rem">

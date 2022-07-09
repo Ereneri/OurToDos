@@ -220,6 +220,19 @@ def pin(request):
     else:
         return JsonResponse({"error": "POST request required."}, status=400)
 
+@csrf_exempt
+@login_required
+def delpin(request):
+    if request.method == 'POST':
+        if Pin.objects.filter(user=request.user).exists():
+            Pin.objects.filter(user=request.user).delete()
+            return JsonResponse({"Success": "pin deleted"}, status=200, safe=False)
+        else:
+            return JsonResponse({"error": "no pin to delete"}, status=200, safe=False)
+    else:
+        return JsonResponse({"error": "POST request required."}, status=400)
+
+
 @login_required
 def getPin(request):
     if request.method == 'GET':
@@ -308,7 +321,8 @@ def invite(request, listid):
         elif request.method == 'POST':
             user = request.POST.get('selecteduser')
             targetUser = User.objects.get(id=user)
-            if Subscribed.objects.filter(subscribed=targetUser).exists():
+            listTarget = List.objects.get(id=listid)
+            if Subscribed.objects.filter(subscribed=targetUser, masterlist=listTarget).exists():
                 pass
                 print("User is already added")
             else:

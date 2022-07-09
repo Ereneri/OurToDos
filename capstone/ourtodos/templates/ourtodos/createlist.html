@@ -12,7 +12,7 @@
         <form action="{% url 'createlist' %}" method="POST">
             {% csrf_token %}
             <div class="form-group container-fluid">
-                <input autofocus class="form-control" type="text" name="listname" placeholder="List Name">
+                <input autofocus class="form-control" style="border: 0; outline: 0; background: transparent;border-bottom: 1px solid darkgrey; width: 100%;" type="text" name="listname" placeholder="List Name">
                 <div class="d-grid gap-2" style="padding-top: 1rem">
                     <input class="btn btn-primary" type="submit" value="Create">
                 </div>
