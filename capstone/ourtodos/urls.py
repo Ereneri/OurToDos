@@ -16,5 +16,8 @@ urlpatterns = [
     path("getPin", views.getPin, name="getPinnedlist"),
     path("delList", views.deleteList, name="deleteList"),
     path("getTitle/<int:listid>", views.getTitle, name="getTitle"),
-    path("delTask", views.delTask, name="delTask")
+    path("delTask", views.delTask, name="delTask"),
+    path("editTask", views.editTask, name="editTask"),
+    path("invite/<int:listid>", views.invite, name="invite"),
+    path("todo/<int:listid>", views.targetlist, name="loadlist")
 ]

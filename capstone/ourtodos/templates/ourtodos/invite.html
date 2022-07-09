@@ -1,0 +1,35 @@
+{% extends "ourtodos/layout.html" %}
+
+{% block body %}
+
+{% if user.is_authenticated %}
+
+{% if message %}
+    <div class="alert alert-danger" role="alert">{{ message }}</div>
+{% endif %}
+
+<h1>Invite</h1>
+
+    <div class="account-wrapper">
+        <form action="{% url 'invite' listid=list.id %}" method="POST">
+            {% csrf_token %}
+            <div class="form-group container-fluid">
+                <input class="form-control" type="text" placeholder="{{ list.title }}" readonly>
+                <div style="margin-top: 1rem" class="form-group">
+                    <label for="users">Select User to be Invited</label>
+                    <select name="selecteduser" class="form-control" id="users">
+                        <option>Please Select</option>
+                        {% for user in users %}
+                            <option value="{{ user.id }}">{{ user }}</option>
+                        {% endfor %}
+                    </select>
+                    <div class="d-grid gap-2" style="padding-top: 1rem">
+                        <input class="btn btn-primary" type="submit" value="Invite">
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+{% endif %}
+
+{% endblock %}

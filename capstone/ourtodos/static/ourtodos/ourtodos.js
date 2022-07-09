@@ -16,8 +16,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-const user = JSON.parse(document.getElementById('user').textContent);
-
 function getCookie(name) {
     let cookieValue = null;
     if (document.cookie && document.cookie !== '') {
@@ -40,7 +38,7 @@ const csrftoken = getCookie('csrftoken');
 // loads the main page of a list
 function loadlist(id, title) {
     console.log("GOT TO LOADLIST")
-    var htmlVAR = `<h1>${title}</h1><ul id="list-group" class="list-group list-group-flush">`;
+    var htmlVAR = `<h1>${title} <a href="/invite/${id}"><span style="font-size: 2rem">⚙</span></a> </h1><ul id="list-group" class="list-group list-group-flush">`;
     htmlVAR += `
     <li class="list-group-item">
             <div class="widget-content p-0">
@@ -138,17 +136,17 @@ function complete(id, boolean) {
 
     // add or remove the "completed by x" div
     if (boolean == 'true') {
-        document.getElementById(`right-${id}`).children[0].innerHTML += `<div id="complete-${id}" style="float:left; padding-right: 1rem">Completed by ${user}</div>`
+        document.getElementById(`right-${id}`).innerHTML = `<div id="complete-${id}" style="float:left; padding-right: 1rem">Completed by ${user}</div>` + document.getElementById(`right-${id}`).innerHTML;
+        document.getElementById(`right-${id}`).children[1].innerHTML += `<div id="delete-${id}" onclick="delTask(${id})"  style="float:right">✗</div>
+        `;
+        document.getElementById(`item-${id}`).setAttribute("class", "list-group-item completed");
+        document.getElementById(`edit-${id}`).remove();
     } else {
         document.getElementById(`complete-${id}`).remove();
-    }
-
-    // edit the div
-    if (boolean == "true") {
-        document.getElementById(`item-${id}`).setAttribute("class", "list-group-item completed");
-    }
-    else {
+        document.getElementById(`delete-${id}`).remove();
         document.getElementById(`item-${id}`).setAttribute("class", "list-group-item");
+        console.log(document.getElementById(`right-${id}`).children[0]);
+        document.getElementById(`right-${id}`).children[0].innerHTML += `<div id="edit-${id}" onclick="editTask(${id})" style="float:right; display: block">✏️</div>`;
     }
 }
 
@@ -185,25 +183,22 @@ function addDiv(id, taskName, createdBy, cBool, comBy) {
     }
 
     // add the rest
-    div += `<div class="widget-content-left">
-                        <div id="taskitem" class="widget-heading">${taskName}</div>
+    div += `<div id="left-${id}" class="widget-content-left">
+                        <div id="taskItem-${id}" class="widget-heading">${taskName}</div>
                         <div class="widget-subheading"><i>By: ${createdBy}</i></div>
                     </div>`
 
     if (cBool == true) {
         div += `<div id="right-${id}" class="widget-content-right">
-                <div>
-                    <div id="complete-${id}" style="float:left; padding-right: 1rem">Completed by ${comBy}</div>
-                    <div id="delete" onclick="delTask('${id}')"  style="float:right">✗</div>
-                    <div id="edit" style="float:right; margin-right: 1rem; display: block">✏️</div>
-                    <div id="save" style="float:right; margin-right: 1rem; display: none">Save</div>
+            <div id="complete-${id}" style="float:left; padding-right: 1rem">Completed by ${comBy}</div>
+                <div class="right-accessories">
+                <div id="delete-${id}" onclick="delTask(${id})"  style="float:right">✗</div>
                 </div></div></div></div></li>`
     } else {
         div += `<div id="right-${id}" class="widget-content-right">
-        <div>
-            <div id="delete" onclick="delTask('${id}')" style="float:right">✗</div>
-            <div id="edit" style="float:right; margin-right: 1rem; display: block">✏️</div>
-            <div id="save" style="float:right; margin-right: 1rem; display: none">Save</div>
+        <div class="right-accessories">
+            <div id="save-${id}" onclick="saveTask(${id})" style="float:right; margin-right: 1rem; display: none">Save</div>
+            <div id="edit-${id}" onclick="editTask(${id})" style="float:right; display: block">✏️</div>
         </div></div></div></div></li>`;
     }
 
@@ -273,4 +268,49 @@ function delTask(id) {
     .then(data => {
         console.log(data);
     })
+}
+
+function editTask(id) {
+    // get div and text
+    var input = document.getElementById(`taskItem-${id}`)
+    console.log(input)
+    var val = input.innerText;
+
+    // change view
+    document.getElementById(`taskItem-${id}`).remove();
+    document.getElementById(`edit-${id}`).style.display = 'none';
+    document.getElementById(`save-${id}`).style.display = 'block';
+
+    var div = `<form style="width:auto" id="editForm-${id}" action="#" onsubmit="saveTask(${id}); return false">
+    <input id="edittask-${id}" style="border: 0; outline: 0; background: transparent; width: 100%; font-size: 0.88rem; padding: 0;flex-basis: auto;" autocomplete="off" size="${val.length+15}" value="${val}">
+    <input type="submit" style="display: none">
+    </form>`
+
+    document.getElementById(`left-${id}`).innerHTML = div + document.getElementById(`left-${id}`).innerHTML;
+}
+
+function saveTask(id) {
+    // get input and console debug info
+    var input = document.getElementById(`edittask-${id}`).value;
+    console.log(id)
+    console.log("Input: " + input);
+
+    // update DB
+    fetch('/editTask', {
+        method: 'PUT',
+        body: JSON.stringify({
+            'id': id,
+            'input': input
+        })
+    })
+    .then(res => res.json())
+    .then(data => {
+        console.log(data);
+    })
+
+    // reset view
+    document.getElementById(`edit-${id}`).style.display = 'block';
+    document.getElementById(`save-${id}`).style.display = 'none';
+    document.getElementById(`editForm-${id}`).remove()
+    document.getElementById(`left-${id}`).innerHTML = `<div id="taskItem-${id}" class="widget-heading">${input}</div>` + document.getElementById(`left-${id}`).innerHTML;
 }

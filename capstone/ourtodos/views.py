@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponseNotFound
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
@@ -33,6 +34,19 @@ def index(request):
                 "lists": targetlists
             })
 
+    # Everyone else is prompted to sign in
+    else:
+        return HttpResponseRedirect(reverse("login"))
+
+def targetlist(request, listid):
+    # Authenticated users view their inbox
+    if request.user.is_authenticated:
+        if List.objects.filter(id=listid).exists():
+            return render(request, "ourtodos/index.html", {
+                "list": listid,
+            })
+        else:
+            return render(request, 'ourtodos/404.html', status=404)
     # Everyone else is prompted to sign in
     else:
         return HttpResponseRedirect(reverse("login"))
@@ -261,6 +275,50 @@ def delTask(request):
             return JsonResponse({"error": "List doesn't exists"}, status=400)
     else:
         return JsonResponse({"error": "POST request required."}, status=400)
+
+@csrf_exempt
+@login_required
+def editTask(request):
+    if request.method == 'PUT':
+        # load data from request
+        data = json.loads(request.body)
+        id = data.get('id')
+        newText = data.get('input')
+
+        # grab and update the task
+        task = Task.objects.get(id=id)
+        task.taskName = newText
+        task.save()
+
+        return JsonResponse({"Success": "task updated"}, status=200, safe=False)
+
+    else:
+        return JsonResponse({"error": "PUT request required."}, status=400)
+
+def invite(request, listid):
+    if request.user.is_authenticated:
+        if request.method == 'GET':
+            ownedlist = List.objects.get(id=listid)
+            users = User.objects.all()
+
+            return render(request, "ourtodos/invite.html", {
+                "list": ownedlist,
+                "users": users
+            })
+        elif request.method == 'POST':
+            user = request.POST.get('selecteduser')
+            targetUser = User.objects.get(id=user)
+            if Subscribed.objects.filter(subscribed=targetUser).exists():
+                pass
+                print("User is already added")
+            else:
+                listTarget = List.objects.get(id=listid)
+                Subscribed.objects.create(masterlist=listTarget, subscribed=targetUser)
+                print("New Object created")
+            return HttpResponseRedirect(reverse("index"))
+    else:
+        return HttpResponseRedirect(reverse("login"))
+
 
 
 

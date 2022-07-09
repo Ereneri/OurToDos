@@ -8,14 +8,15 @@
 
 <h1>Create List</h1>
 
-
     <div class="account-wrapper">
         <form action="{% url 'createlist' %}" method="POST">
             {% csrf_token %}
-            <div class="form-group">
+            <div class="form-group container-fluid">
                 <input autofocus class="form-control" type="text" name="listname" placeholder="List Name">
+                <div class="d-grid gap-2" style="padding-top: 1rem">
+                    <input class="btn btn-primary" type="submit" value="Create">
+                </div>
             </div>
-            <input class="btn btn-primary btn-lg btn-block" type="submit" value="Create">
         </form>
     </div>
 

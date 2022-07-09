@@ -4,26 +4,31 @@
 <html lang="en">
     <head>
         <title>{% block title %}OurToDos{% endblock %}</title>
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="apple-touch-icon" sizes="180x180" href="{% static 'apple-touch-icon.png' %}">
+        <link rel="icon" type="image/png" sizes="32x32" href="{% static 'favicon-32x32.png' %}">
+        <link rel="icon" type="image/png" sizes="16x16" href="{% static 'favicon-16x16.png' %}">
+        <link rel="manifest" href="{% static 'site.webmanifest' %}">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+
         <link href="{% static 'ourtodos/styles.css' %}" rel="stylesheet">
         <script src="{% static 'ourtodos/ourtodos.js' %}" rel="script"></script>
     </head>
+
     <body>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+          <div class="container-fluid">
             <a class="navbar-brand" href="{% url 'index' %}">OurToDos</a>
 
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
             </button>
 
             <div class="collapse navbar-collapse" id="navbarNav">
               <ul class="navbar-nav">
                 {% if user.is_authenticated %}
-                    <li class="nav-item active">
-                    <a class="nav-link" href="{% url 'index' %}">Home</a>
-                    </li>
                     <li class="nav-item">
-                    <a class="nav-link" href="{% url 'alllist' %}">All Lists</a>
+                      <a class="nav-link" href="{% url 'alllist' %}">All Lists</a>
                     </li>
                     <li class="nav-item">
                     <a class="nav-link" href="{% url 'createlist' %}">Create List</a>
@@ -39,12 +44,15 @@
                         <a class="nav-link" href="{% url 'register' %}">Register</a>
                     </li>
                 {% endif %}
-              </ul>
+                </ul>
+              </div>
             </div>
           </nav>
           <div class="body">
             {% block body %}
             {% endblock %}
           </div>
+          <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js" integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk" crossorigin="anonymous"></script>
+          <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-kjU+l4N0Yf4ZOJErLsIcvOU2qSb74wXpOhqTvwVx3OElZRweTnQ6d31fXEoRD1Jy" crossorigin="anonymous"></script>
     </body>
 </html>
