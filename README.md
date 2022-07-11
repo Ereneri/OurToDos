@@ -27,7 +27,7 @@ All the lists are rendered by using a JavaScript function called addDiv which ta
 * ourtodos/urls.py contains all the URLS for the APIs and pages.
 * ourtodos/models.py contains all the models created for this project.
 
-##Install Directions
+## Install Directions
 
 ## 1. Download files
 
