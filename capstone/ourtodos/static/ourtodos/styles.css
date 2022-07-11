@@ -38,6 +38,7 @@ body {
     line-height: 1.5;
     color: #495057;
     text-align: left;
+    height: 100%;
 }
 
 i {
@@ -242,3 +243,15 @@ a:link { text-decoration: none; }
 a:visited { text-decoration: none; }
 a:hover { text-decoration: none; }
 a:active { text-decoration: none; }
+
+html {
+    height: 100%;
+  }
+
+footer {
+    position: absolute;
+    left: 0 ; right: 0; bottom: 0;
+    height:[footer-height];
+    padding-top: 1rem!important;
+    margin-top: 1.5rem!important;
+}
